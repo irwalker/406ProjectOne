@@ -35,18 +35,18 @@ class Initialisation
 
 	def send_to_host(json,is_last=false)
 		begin
-		key = json.keys[0]
-		host_info = json[key]
-		if is_last == true
-			host_address = host_info["orig_server"]
-		else
-			host_address = key.to_s
-		end
-		url = "http://#{host_address.to_s}nwen406/init"
-		json.delete(key)
-		response = RestClient.post(url,:json => json.to_json,:content_type => :json, :accept => :json, :timeout => 5)		
-		puts response.code
-		catch Exception => e
+			key = json.keys[0]
+			host_info = json[key]
+			if is_last == true
+				host_address = host_info["orig_server"]
+			else
+				host_address = key.to_s
+			end
+			url = "http://#{host_address.to_s}nwen406/init"
+			json.delete(key)
+			response = RestClient.post(url,:json => json.to_json,:content_type => :json, :accept => :json, :timeout => 5)		
+			puts response.code
+		rescue Exception => e
 			puts e
 		end
 	end
