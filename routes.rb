@@ -7,8 +7,8 @@ require 'crack'
 class MyApp < Sinatra::Base
 
 	post '/nwen406/init/?' do 
-		puts params
-		json = params[:json]
+		puts request.body
+		json = Crack::JSON.parse(request.body)
 		puts "resource received: #{json}"
 		initialisation = Initialisation.new(json)
 		initialisation.handle_request
