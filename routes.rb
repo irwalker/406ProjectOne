@@ -45,14 +45,17 @@ class Initialisation
 		begin
 			key = json.keys[0]
 			host_info = json[key]
-			if is_last == true
+			if is_last == true and host_info = '54.213.119.20'
+				json.delete(key)
 				host_address = host_info["orig_server"]
+			elsif is_last == true
+				host_address = key.to_s
 			else
+				json.delete(key)
 				host_address = key.to_s
 			end
-			url = "http://#{host_address.to_s}nwen406/init"
-			json.delete(key)
-			response = RestClient.post(url,:json => json.to_json,:content_type => :json, :accept => :json, :timeout => 5)		
+			url = "http://#{host_address.to_s}nwen406/init"			
+			response = RestClient.post(url,:data => json.to_json,:content_type => :json, :accept => :json, :timeout => 5)		
 			puts response.code
 		rescue Exception => e
 			puts e
