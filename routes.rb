@@ -7,6 +7,7 @@ require 'crack'
 class MyApp < Sinatra::Base
 
 	post '/nwen406/init/?' do 
+		puts params
 		json = params[:json]
 		puts "resource received: #{json}"
 		initialisation = Initialisation.new(json)
@@ -29,7 +30,7 @@ class Initialisation
 	end
 
 	def handle_request
-		json = Crack::JSON.parse(@json)
+		json = @json.to_json
 		if json.size == 1 #last on the list
 			send_to_host(json,true)
 		else
