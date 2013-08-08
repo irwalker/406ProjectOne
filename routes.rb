@@ -49,13 +49,15 @@ class Initialisation
 				json.delete(key)
 				host_address = host_info["orig_server"]
 			elsif is_last == true
-				host_address = key.to_s
+				host_address = key
 			else
 				json.delete(key)
 				host_address = key.to_s
 			end
-			url = "http://#{host_address.to_s}nwen406/init"			
-			response = RestClient.post(url,:data => json.to_json,:content_type => :json, :accept => :json, :timeout => 5)		
+			url = "http://#{host_address.to_s}/nwen406/init"			
+			puts "URL #{url}"
+			puts "SENDING #{json}"
+			response = RestClient.post(url,:payload => { :data => json.to_json},:content_type => "application/json", :accept => "application/json", :timeout => 5)		
 			puts response.code
 		rescue Exception => e
 			puts e
