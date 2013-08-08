@@ -57,12 +57,13 @@ class Initialisation
 			url = "http://#{host_address.to_s}/nwen406/init"			
 			puts "URL #{url}"
 			puts "SENDING #{json}"
-			request = RestClient::Request.new(
-								:method => :post,
-								:url => url,
-								:content_type => 'application/json',
-								:payload => json.to_json.to_s										
-							)
+			request = RestClient.port(url, json.to_json, :content_type => 'application/json', :timeout => '5')
+			# request = RestClient::Request.new(
+			# 					:method => :post,
+			# 					:url => url,
+			# 					:content_type => 'application/json',
+			# 					:payload => json.to_json.to_s										
+			# 				)
 			puts request.inspect
 			response = request.execute
 			puts response.code
