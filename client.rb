@@ -13,6 +13,12 @@ class Client
 		post(json)
 	end
 
+	def test
+#		end_point = "http://75.101.238.61:80/test"
+		response = RestClient.get(@end_point,:timeout => 5)
+		puts response
+	end
+
 	def construct_json
 		json = {
 		:"75.101.238.61:80/" => {
@@ -35,8 +41,9 @@ end
 class CommandLineInterface
 
 	def initialize
-		@client = Client.new('127.0.0.1:9292')
-		await_input
+		@client = Client.new('75.101.238.61:80')
+		@client.test
+#		await_input
 	end
 
 	def await_input
