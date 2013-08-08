@@ -12,10 +12,11 @@ class MyApp < Sinatra::Base
 		puts "resource received: #{json}"
 		initialisation = Initialisation.new(json)
 		initialisation.handle_request
-		"the server works"
+	
 		#now that we have handled networking stuff, move on to rendering the video
 		render = Render.new(json)
 		render.execute
+		"the server works"
 	end
 
 	#Test method for access
