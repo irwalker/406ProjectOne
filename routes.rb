@@ -6,17 +6,16 @@ require 'crack'
 #the routes handling class
 class MyApp < Sinatra::Base
 
+	#the only incoming post that I actually have to worry about!
 	post '/nwen406/init/?' do 
-		puts request.body
 		json = request.body.read	
-	#	json = params[:data]
-		puts json
-#		json = Crack::JSON.parse(params[:data])
 		puts "resource received: #{json}"
 		initialisation = Initialisation.new(json)
 		initialisation.handle_request
 		"the server works"
 		#now that we have handled networking stuff, move on to rendering the video
+		render = Render.new(json)
+		render.execute
 	end
 
 	#Test method for access
@@ -57,8 +56,6 @@ class Initialisation
 			url = "http://#{host_address.to_s}/nwen406/init"			
 			puts "URL #{url}"
 			puts "SENDING #{json}"
-#			r#esponse = RestClient.post(url,:payload => { :data => },:content_type => "application/json", :accept => "application/json", :timeout => 5)		
-
 			request = RestClient::Request.new(
 								:method => :post,
 								:url => url,
@@ -67,6 +64,7 @@ class Initialisation
 										:data => json.to_json
 										}
 							)
+			puts request.inspect
 			response = request.execute
 			puts response.code
 		rescue Exception => e
@@ -77,13 +75,18 @@ class Initialisation
 end
 
 #the actual video rendering stuff
-class Rendering
-	def initialize(bitrate,resource_location)
+class Render
+	def initialize(json)
+		@json = json
+	end
+
+	def execute
+		json = Crack::JSON.parse(@json)
 
 	end
 
 	#retrieve the video from the given location
-	def get_video
+	def get_video(url,bitrate)
 
 	end
 
