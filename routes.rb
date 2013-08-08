@@ -34,6 +34,7 @@ class Initialisation
 
 	def handle_request
 		json = Crack::JSON.parse(@json)
+		json.delete('54.213.119.20') #delete myself from the list
 		if json.size == 1 #last on the list
 			send_to_host(json,true)
 		else
