@@ -8,8 +8,7 @@ class MyApp < Sinatra::Base
 
 	post '/nwen406/init/?' do 
 		puts request.body
-		json = request.body.read
-	
+		json = request.body.read	
 	#	json = params[:data]
 		puts json
 #		json = Crack::JSON.parse(params[:data])
@@ -34,7 +33,7 @@ class Initialisation
 	end
 
 	def handle_request
-		json = @json.to_json
+		json = Crack::JSON.parse(@json)
 		if json.size == 1 #last on the list
 			send_to_host(json,true)
 		else
