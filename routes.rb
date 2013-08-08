@@ -61,7 +61,7 @@ class Initialisation
 								:url => url,
 								:content_type => 'application/json',
 								:payload => {
-										:data => json.to_json
+										:data => json.to_json.to_s
 										}
 							)
 			puts request.inspect
