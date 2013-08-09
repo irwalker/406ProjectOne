@@ -11,8 +11,10 @@ class MyApp < Sinatra::Base
 		json = request.body.read	
 		puts "resource received: #{json}"
 		initialisation = Initialisation.new(json)
-		initialisation.handle_request
-	
+	result = 	initialisation.handle_request
+		if result == 'cheers'
+			return 'cheers'
+		end
 		#now that we have handled networking stuff, move on to rendering the video
 		render = Render.new(json)
 		render.execute
@@ -34,9 +36,10 @@ class Initialisation
 
 	def handle_request
 		json = Crack::JSON.parse(@json)
-		json.delete('54.213.119.20') #delete myself from the list
-		if json.size == 1 #last on the list
-			send_to_host(json,true)
+		
+
+		if json.empty? #last on the list
+			return "cheers"
 		else
 			send_to_host(json,false)
 		end
@@ -46,15 +49,14 @@ class Initialisation
 		begin
 			key = json.keys[0]
 			host_info = json[key]
-			if is_last == true and host_info = '54.213.119.20'
-				json.delete(key)
+			if host_info = '54.213.119.20' #list just contains us
+				#json.delete(key)
 				host_address = host_info["orig_server"]
-			elsif is_last == true
-				host_address = key
 			else
-				json.delete(key)
+				#json.delete(key)
 				host_address = key.to_s
 			end
+			json.delete('54.213.119.20') #delete myself from the list
 			url = "http://#{host_address.to_s}/nwen406/init"			
 			puts "URL #{url}"
 			puts "SENDING #{json}"
