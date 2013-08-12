@@ -97,6 +97,8 @@ class Render
 	end
 
 	def execute
+
+	begin
 		json = Crack::JSON.parse(@json)
 		key = json.keys[0]
 		host_info = json[key]
@@ -107,10 +109,12 @@ class Render
 		exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
 		orig_server = host_info["orig_server"]
 		#and finally, upload this file to the orig server
-		request = RestClient.post(orig_server,File.new("file_encoded"), :content_type => 'multipart/form')
+		request = RestClient.post(orig_server+"/nwen406/receive",File.new("file_encoded"), :content_type => 'multipart/form')
 		request.execute
 		end
 
-	
+	rescue Exception => e
+		return "woops lol that failed hard #{3}"
+	end
 
 end
