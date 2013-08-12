@@ -119,12 +119,13 @@ class Render
 		#exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
 		orig_server = host_info["orig_server"]
 		#and finally, upload this file to the orig server
-		request = RestClient.post(orig_server+"/nwen406/receive",File.new("#{random}iainoutput.mov"), :content_type => 'multipart/form')
-		request.execute
+		request = RestClient.post(orig_server+"/nwen406/receive",File.new("#{random}iainoutput.mov"), :content_type => 'multipart/form-data')
+		response = request.execute
+		puts response.code
 		end
 
 	rescue Exception => e
-		return "woops lol that failed hard #{3}"
+		return "woops lol that failed hard #{e}"
 	end
 
 end
