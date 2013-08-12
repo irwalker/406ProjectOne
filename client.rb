@@ -22,8 +22,8 @@ class Client
 	def construct_json
 		json = {
 		:"75.101.238.61:80/" => {
-			:file_url => 'http://location_to_orig_file',
-			:bitrate => '240',
+			:file_url => 'http://media.xiph.org/video/firebelly/firebelly-chains-dv.mov',
+			:bitrate => '2',
 			:orig_server => '54.213.119.20:80/',
 			:output_url => ''
 		}
