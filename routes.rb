@@ -13,25 +13,26 @@ class MyApp < Sinatra::Base
 		puts "resource received: #{json}"
 		initialisation = Initialisation.new(json)
 		render = Render.new(json)
+		render.execute
 		result = 	initialisation.handle_request
 		if result == 'cheers'
 			return 'cheers'
 		end
 		#now that we have handled networking stuff, move on to rendering the video
 		
-		render.execute
+#		render.execute
 		"the server works"
 	end
 
 	# Handle POST-request (Receive and save the uploaded file)
 	post '/nwen406/receive/?' do 
-	puts "IN RECEIVE METHOD "
-	obj=  request.body.read
-	puts obj.inspect
-		File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-	   	f.write(params['myfile'][:tempfile].read)
-	  end
-	  return "The file was successfully uploaded!"
+#	puts "IN RECEIVE METHOD "
+#	obj=  request.body.read
+#	puts obj.inspect
+#		File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+#	   	f.write(params['myfile'][:tempfile].read)
+#	  end
+	return "The file was successfully uploaded!"
 	#{}"File Uploaded successfully"
 	end
 
@@ -78,7 +79,7 @@ class Initialisation
 			end
 			puts "HOST ADDRESS #{host_address}"
 			json.delete('54.213.119.20') #delete myself from the list
-			url = "http://#{host_address.to_s}/nwen406/init"			
+			url = "http://#{host_address.to_s}/nwen406/init/"			
 			puts "URL #{url}"
 			puts "SENDING #{json}"
 			request = RestClient.post(url, json.to_json, :content_type => 'application/json', :timeout => '5')
@@ -86,11 +87,12 @@ class Initialisation
 			response = request.execute
 			puts response.code
 			if response.code == '500'
+				puts "Error received, discarding host"
 				json.delete("#{host_address}")
 				send_to_host(json)
 			end
 		rescue Exception => e
-			puts e
+			puts "Exception received, discarding host"
 			json.delete("#{host_address}")
 			send_to_host(json)
 		end
