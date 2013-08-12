@@ -32,7 +32,9 @@ class Client
 
 	def post json
 		puts json.to_json
-		response = RestClient.post(@end_point + "/nwen406/init",:json => json.to_json,:content_type => :json, :accept => :json)
+		  request = RestClient.post(@end_point + "/nwen406/init", json.to_json, :content_type => 'application/json', :timeout => '5')
+		response = request.execute
+#		response = RestClient.post(@end_point + "/nwen406/init",:json => json.to_json,:content_type => :json, :accept => :json)
 		puts response
 	end
 

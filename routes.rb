@@ -49,13 +49,16 @@ class Initialisation
 		begin
 			key = json.keys[0]
 			host_info = json[key]
-			if host_info = '54.213.119.20' #list just contains us
+			puts "HOST INFO #{host_info}"
+			if key == '54.213.119.20' #list just contains us
 				#json.delete(key)
+				puts "LIST ONLY CONTAINS US"
 				host_address = host_info["orig_server"]
 			else
 				#json.delete(key)
 				host_address = key.to_s
 			end
+			puts "HOST ADDRESS #{host_address}"
 			json.delete('54.213.119.20') #delete myself from the list
 			url = "http://#{host_address.to_s}/nwen406/init"			
 			puts "URL #{url}"
