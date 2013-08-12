@@ -111,7 +111,8 @@ class Render
 #			fo.write(RestClient.get("#{file_url}"))
 #		end
 		puts "wget is done"
-		cmd = "ffmpeg -i file -b:v #{bitrate}k -bufsize #{bitrate}l output.mov"
+
+		cmd = "ffmpeg -i firebelly-chains-dv.mov-vcodec libx264 -strict -2 -ab 128k -b:v #{bitrate}k output.mov"
 		system(cmd)
 #		Open3.popen3(cmd)  do |stdin, stdout, stderr, wait_thr|
 #		  puts "stdout is:" + stdout.read
