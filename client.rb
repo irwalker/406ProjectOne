@@ -25,7 +25,9 @@ class Client
 
 	def upload_test
 		puts "DOING UPLOAD TEST FOR 54.213.119.20"
-		request = RestClient.post('http://54.213.119.20/nwen406/receive/',File.new("153iainoutput.mov"), :content_type => 'multipart/form-data')
+		request = RestClient.post('http://54.213.119.20/nwen406/receive/',:file => File.new('153iainoutput.mov'), :content_type => 'multipart/form-data')
+
+#		request = RestClient.post('http://54.213.119.20/nwen406/receive/',File.new("153iainoutput.mov"), :content_type => 'multipart/form-data')
 		response = request.execute
 	end
 
