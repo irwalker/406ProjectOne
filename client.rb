@@ -44,8 +44,8 @@ class CommandLineInterface
 
 	def initialize
 		@client = Client.new('75.101.238.61:80')
-		@client.test
-#		await_input
+#		@client.test
+		await_input
 	end
 
 	def await_input
