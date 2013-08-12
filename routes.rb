@@ -60,7 +60,10 @@ class Initialisation
 		end
 	end
 
-	def send_to_host(json,is_last=false)
+	def send_to_host(json,is_last=false,retry_count=0)
+		if json.empty?
+			return "cheers"
+		end
 		begin
 			key = json.keys[0]
 			host_info = json[key]
@@ -82,8 +85,14 @@ class Initialisation
 			puts request.inspect
 			response = request.execute
 			puts response.code
+			if response.code == '500'
+				json.delete("#{host_address}")
+				send_to_host(json)
+			end
 		rescue Exception => e
 			puts e
+			json.delete("#{host_address}")
+			send_to_host(json)
 		end
 	end
 
