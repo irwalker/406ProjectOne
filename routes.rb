@@ -103,11 +103,11 @@ class Render
 		file_url = host_info["file_url"]
 		bitrate = host_info["bitrate"]
 
-		exec("wget #{file_url} file")
+		exec("wget -O file #{file_url}")
 		exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
 		orig_server = host_info["orig_server"]
 		#and finally, upload this file to the orig server
-		request = RestClient.post(orig_server,File.new("file_encoded"), :content_type => 'multipart/form')
+		request = RestClient.post(orig_server+"/nwen406/receive",File.new("file_encoded"), :content_type => 'multipart/form')
 		request.execute
 		end
 
