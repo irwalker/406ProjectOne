@@ -106,12 +106,12 @@ class Render
 		file_url = host_info["file_url"]
 		bitrate = host_info["bitrate"]
 
-#		exec("wget -O file #{file_url}")
-		File.open("file",'wb') do |fo|
-			fo.write(RestClient.get("#{file_url}"))
-		end
+		system("wget -O file #{file_url}")
+#		File.open("file",'wb') do |fo|
+#			fo.write(RestClient.get("#{file_url}"))
+#		end
 		puts "wget is done"
-		cmd = "x264 --pass1 --bitrate#{bitrate}"
+		cmd = "ffmpeg -i file -b:v #{bitrate}k -bufsize #{bitrate}l output.mov"
 		system(cmd)
 #		Open3.popen3(cmd)  do |stdin, stdout, stderr, wait_thr|
 #		  puts "stdout is:" + stdout.read
