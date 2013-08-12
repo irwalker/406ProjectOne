@@ -11,15 +11,25 @@ class MyApp < Sinatra::Base
 		json = request.body.read	
 		puts "resource received: #{json}"
 		initialisation = Initialisation.new(json)
-	result = 	initialisation.handle_request
+		render = Render.new(json)
+		result = 	initialisation.handle_request
 		if result == 'cheers'
 			return 'cheers'
 		end
 		#now that we have handled networking stuff, move on to rendering the video
-		render = Render.new(json)
+		
 		render.execute
 		"the server works"
 	end
+
+	# Handle POST-request (Receive and save the uploaded file)
+	post '/nwen406/receive/?' do 
+  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+    f.write(params['myfile'][:tempfile].read)
+  end
+  return "The file was successfully uploaded!"
+end
+
 
 	#Test method for access
 	get '/test' do
@@ -88,16 +98,19 @@ class Render
 
 	def execute
 		json = Crack::JSON.parse(@json)
+		key = json.keys[0]
+		host_info = json[key]
+		file_url = host_info["file_url"]
+		bitrate = host_info["bitrate"]
+
+		exec("wget #{file_url} file")
+		exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
+		orig_server = host_info["orig_server"]
+		#and finally, upload this file to the orig server
+		request = RestClient.post(orig_server,File.new("file_encoded"), :content_type => 'multipart/form')
+		request.execute
+		end
 
 	end
 
-	#retrieve the video from the given location
-	def get_video(url,bitrate)
-
-	end
-
-	#buffer the video at the given bitrate
-	def buffer
-
-	end
 end
