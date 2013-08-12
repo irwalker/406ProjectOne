@@ -97,6 +97,8 @@ class Render
 	end
 
 	def execute
+
+	begin
 		json = Crack::JSON.parse(@json)
 		key = json.keys[0]
 		host_info = json[key]
@@ -111,6 +113,8 @@ class Render
 		request.execute
 		end
 
-	
+	rescue Exception => e
+		return "woops lol that failed hard #{3}"
+	end
 
 end
