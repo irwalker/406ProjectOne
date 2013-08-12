@@ -9,8 +9,12 @@ class Client
 	end
 
 	def main
+	begin
 		json = construct_json
 		post(json)
+	rescue Exception => e
+		puts "EXCEPTION #{e}"
+	end
 	end
 
 	def test
@@ -21,18 +25,19 @@ class Client
 
 	def construct_json
 		json = {
-		:"75.101.238.61:80/" => {
+		:"75.101.238.61" => {#dave
+	#	:"54.213.134.218" => {#shakib
 			:file_url => 'http://media.xiph.org/video/firebelly/firebelly-chains-dv.mov',
 			:bitrate => '2',
 			:orig_server => '54.213.119.20:80/',
-			:output_url => ''
+			:output_url => '54.213.119.20/nwen406/receive/'
 		}
 		}
 	end
 
 	def post json
 		puts json.to_json
-		  request = RestClient.post(@end_point + "/nwen406/init", json.to_json, :content_type => 'application/json', :timeout => '5')
+                request = RestClient.post(@end_point + "/nwen406/init", json.to_json, :content_type => 'application/json', :timeout => '5')
 		response = request.execute
 #		response = RestClient.post(@end_point + "/nwen406/init",:json => json.to_json,:content_type => :json, :accept => :json)
 		puts response
@@ -43,7 +48,9 @@ end
 class CommandLineInterface
 
 	def initialize
-		@client = Client.new('75.101.238.61:80')
+#		@client = Client.new('54.213.134.218')#shakib
+	
+		@client = Client.new('75.101.238.61')#david
 #		@client.test
 		await_input
 	end
