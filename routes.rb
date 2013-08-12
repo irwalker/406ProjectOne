@@ -111,7 +111,18 @@ class Render
 			fo.write(RestClient.get("#{file_url}"))
 		end
 		puts "wget is done"
-#		exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
+		cmd = "x264 --pass1 --bitrate#{bitrate}"
+		Open3.popen3(cmd)  do |stdin, stdout, stderr, wait_thr|
+		  puts "stdout is:" + stdout.read
+		  puts "stderr is:" + stderr.read
+		end
+		#sh "x264 --pass1 --bitrate#{bitrate}" do |ok,res|
+		#	if !ok
+		#		puts "the operation failed"
+		#	end
+		#end
+		puts "x264 is doneskies"
+		#exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
 		orig_server = host_info["orig_server"]
 		#and finally, upload this file to the orig server
 		request = RestClient.post(orig_server+"/nwen406/receive",File.new("file_encoded"), :content_type => 'multipart/form')
