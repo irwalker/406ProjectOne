@@ -27,8 +27,8 @@ class MyApp < Sinatra::Base
   File.open('uploads/' + params['myfile'][:filename], "w") do |f|
     f.write(params['myfile'][:tempfile].read)
   end
-  return "The file was successfully uploaded!"
-end
+ 		 return "The file was successfully uploaded!"
+	end
 
 
 	#Test method for access
@@ -111,6 +111,6 @@ class Render
 		request.execute
 		end
 
-	end
+	
 
 end
