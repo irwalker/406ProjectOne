@@ -112,10 +112,11 @@ class Render
 		end
 		puts "wget is done"
 		cmd = "x264 --pass1 --bitrate#{bitrate}"
-		Open3.popen3(cmd)  do |stdin, stdout, stderr, wait_thr|
-		  puts "stdout is:" + stdout.read
-		  puts "stderr is:" + stderr.read
-		end
+		system(cmd)
+#		Open3.popen3(cmd)  do |stdin, stdout, stderr, wait_thr|
+#		  puts "stdout is:" + stdout.read
+#		  puts "stderr is:" + stderr.read
+		#end
 		#sh "x264 --pass1 --bitrate#{bitrate}" do |ok,res|
 		#	if !ok
 		#		puts "the operation failed"
