@@ -36,7 +36,27 @@ class Client
 		:"75.101.238.61" => {#dave
 	#	:"54.213.134.218" => {#shakib
 			:file_url => 'http://media.xiph.org/video/firebelly/firebelly-chains-dv.mov',
+			:bitrate => '54',
+			:orig_server => '54.213.119.20',
+			:output_url => '54.213.119.20/nwen406/receive/'
+		},
+			:"54.213.119.20" => {#dave	#	:"54.213.134.218" => {#shakib
+			:file_url => 'http://media.xiph.org/video/firebelly/firebelly-chains-dv.mov',
+			:bitrate => '1',
+			:orig_server => '54.213.119.20',
+			:output_url => '54.213.119.20/nwen406/receive/'
+		},
+			:"12.123.456.78" => {#dave
+	#	:"54.213.134.218" => {#shakib
+			:file_url => 'http://media.xiph.org/video/firebelly/firebelly-chains-dv.mov',
 			:bitrate => '2',
+			:orig_server => '54.213.119.20',
+			:output_url => '54.213.119.20/nwen406/receive/'
+		},
+			:"54.213.99.254" => {#dave
+	#	:"54.213.134.218" => {#shakib
+			:file_url => 'http://media.xiph.org/video/firebelly/firebelly-chains-dv.mov',
+			:bitrate => '36',
 			:orig_server => '54.213.119.20',
 			:output_url => '54.213.119.20/nwen406/receive/'
 		}
@@ -60,8 +80,8 @@ class CommandLineInterface
 	
 		@client = Client.new('75.101.238.61')#david
 #		@client.test
-		@client.upload_test
-	#	await_input
+		#@client.upload_test
+	  await_input
 	end
 
 	def await_input
