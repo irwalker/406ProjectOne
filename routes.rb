@@ -2,6 +2,7 @@ require 'sinatra/base'
 require 'json'
 require 'rest-client'
 require 'crack'
+require 'open-uri'
 
 #the routes handling class
 class MyApp < Sinatra::Base
@@ -105,8 +106,12 @@ class Render
 		file_url = host_info["file_url"]
 		bitrate = host_info["bitrate"]
 
-		exec("wget -O file #{file_url}")
-		exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
+#		exec("wget -O file #{file_url}")
+		File.open("file",'wb') do |fo|
+			fo.write(RestClient.get("#{file_url}"))
+		end
+		puts "wget is done"
+#		exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
 		orig_server = host_info["orig_server"]
 		#and finally, upload this file to the orig server
 		request = RestClient.post(orig_server+"/nwen406/receive",File.new("file_encoded"), :content_type => 'multipart/form')
