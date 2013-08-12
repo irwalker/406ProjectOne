@@ -26,11 +26,13 @@ class MyApp < Sinatra::Base
 	# Handle POST-request (Receive and save the uploaded file)
 	post '/nwen406/receive/?' do 
 	puts "IN RECEIVE METHOD "
-#		File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-#	   	f.write(params['myfile'][:tempfile].read)
-#	  end
-#	  return "The file was successfully uploaded!"
-	"LOL UPLOAD THAT SHITTY VIDEO YOU GAY RAND FUCK FUCK YOU GTFO"
+	obj=  request.body.read
+	puts obj.inspect
+		File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+	   	f.write(params['myfile'][:tempfile].read)
+	  end
+	  return "The file was successfully uploaded!"
+	#{}"File Uploaded successfully"
 	end
 
 
