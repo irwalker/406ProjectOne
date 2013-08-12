@@ -107,27 +107,19 @@ class Render
 		bitrate = host_info["bitrate"]
 
 		system("wget -O file #{file_url}")
-#		File.open("file",'wb') do |fo|
-#			fo.write(RestClient.get("#{file_url}"))
-#		end
 		puts "wget is done"
 
-		cmd = "ffmpeg -i firebelly-chains-dv.mov-vcodec libx264 -strict -2 -ab 128k -b:v #{bitrate}k output.mov"
+		#random start!!
+		random = rand(1000).to_s
+
+		cmd = "ffmpeg -i firebelly-chains-dv.mov -vcodec libx264 -strict -2 -ab 128k -b:v #{bitrate}k #{random}iainoutput.mov"
 		system(cmd)
-#		Open3.popen3(cmd)  do |stdin, stdout, stderr, wait_thr|
-#		  puts "stdout is:" + stdout.read
-#		  puts "stderr is:" + stderr.read
-		#end
-		#sh "x264 --pass1 --bitrate#{bitrate}" do |ok,res|
-		#	if !ok
-		#		puts "the operation failed"
-		#	end
-		#end
+
 		puts "x264 is doneskies"
 		#exec("x264 --pass1 --bitrate#{bitrate} -o file_encoded file")
 		orig_server = host_info["orig_server"]
 		#and finally, upload this file to the orig server
-		request = RestClient.post(orig_server+"/nwen406/receive",File.new("file_encoded"), :content_type => 'multipart/form')
+		request = RestClient.post(orig_server+"/nwen406/receive",File.new("#{random}iainoutput.mov"), :content_type => 'multipart/form')
 		request.execute
 		end
 
