@@ -25,10 +25,10 @@ class MyApp < Sinatra::Base
 
 	# Handle POST-request (Receive and save the uploaded file)
 	post '/nwen406/receive/?' do 
-  File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-    f.write(params['myfile'][:tempfile].read)
-  end
- 		 return "The file was successfully uploaded!"
+		File.open('uploads/' + params['myfile'][:filename], "w") do |f|
+	   	f.write(params['myfile'][:tempfile].read)
+	  end
+	  return "The file was successfully uploaded!"
 	end
 
 
@@ -75,12 +75,6 @@ class Initialisation
 			puts "URL #{url}"
 			puts "SENDING #{json}"
 			request = RestClient.post(url, json.to_json, :content_type => 'application/json', :timeout => '5')
-			# request = RestClient::Request.new(
-			# 					:method => :post,
-			# 					:url => url,
-			# 					:content_type => 'application/json',
-			# 					:payload => json.to_json.to_s										
-			# 				)
 			puts request.inspect
 			response = request.execute
 			puts response.code

@@ -23,13 +23,18 @@ class Client
 		puts response
 	end
 
+	def upload_test
+		request = RestClient.post('54.213.119.20/nwen406/receive',File.new("153iainoutput.mov"), :content_type => 'multipart/form-data')
+		response = request.execute
+	end
+
 	def construct_json
 		json = {
 		:"75.101.238.61" => {#dave
 	#	:"54.213.134.218" => {#shakib
 			:file_url => 'http://media.xiph.org/video/firebelly/firebelly-chains-dv.mov',
 			:bitrate => '2',
-			:orig_server => '54.213.119.20:80/',
+			:orig_server => '54.213.119.20',
 			:output_url => '54.213.119.20/nwen406/receive/'
 		}
 		}
@@ -52,7 +57,8 @@ class CommandLineInterface
 	
 		@client = Client.new('75.101.238.61')#david
 #		@client.test
-		await_input
+		@client.upload_test
+		#await_input
 	end
 
 	def await_input
